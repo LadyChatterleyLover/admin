@@ -1,0 +1,90 @@
+<template>
+  <div style="overflow-x: hidden">
+    <router-view v-if="$route.path === '/login' || $route.path === '/register' || $route.path === '/findPwd'"></router-view>
+    <el-container v-else>
+      <el-header style="padding: 0;z-index: 999">
+        <nav-header></nav-header>
+      </el-header>
+      <el-container>
+        <el-aside width="200px">
+          <nav-left :active="active"></nav-left>
+        </el-aside>
+        <el-main>
+          <dialog-msg></dialog-msg>
+          <nav-view></nav-view>
+          <router-view></router-view>
+        </el-main>
+      </el-container>
+    </el-container>
+    <div class="chat">
+      <div>
+        <i class="el-icon-chat-dot-round icon"></i>
+      </div>
+      <div>
+        在线客服
+      </div>
+    </div>
+  </div>
+
+</template>
+
+<script>
+  import NavHeader from '../../components/navHeader/NavHeader'
+  import NavLeft from '../..//components/navLeft/NavLeft'
+  import NavView from './Nav'
+  import DialogMsg from '../../components/dialog/UpdateDialog'
+  export default {
+    name: "Content",
+    components: {
+      NavHeader,
+      NavLeft,
+      NavView,
+      DialogMsg
+    },
+    props: {},
+    data() {
+      return {
+        active: '1'
+      }
+    },
+    methods: {},
+    mounted() {
+
+    },
+    created() {
+
+    },
+    filters: {},
+    computed: {},
+    watch: {
+
+    },
+    directives: {}
+  }
+</script>
+
+<style scoped lang="scss">
+  .el-header {
+    padding: 0;
+  }
+  .chat {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 26px;
+    height: 90px;
+    line-height: 16px;
+    padding-top: 5px;
+    background: #0285DC;
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+    .icon {
+      font-size: 16px;
+    }
+  }
+  .el-main {
+    width: calc(100vw - 16px);
+  }
+</style>
