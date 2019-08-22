@@ -110,7 +110,7 @@
     position: absolute;
     background: #9EB2BD;
     display: flex;
-    top: 13%;
+    top: 9%;
     left: 13.3%;
     z-index: 99;
     font-size: 22px;
