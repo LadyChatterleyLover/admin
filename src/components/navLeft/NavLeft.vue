@@ -121,6 +121,7 @@
       },
       collapse() {
         this.isCollapse = !this.isCollapse
+        this.$store.state.isCollapse = this.isCollapse
       },
       getUpdate() {
         this.$com.req('api/update').then(res => {
@@ -256,7 +257,7 @@
     background: red;
     border-radius: 50%;
     position: absolute;
-    top: 28px;
+    top: 26px;
     left: 46px;
     z-index: 99;
     font-size: 26px;

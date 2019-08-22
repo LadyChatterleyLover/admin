@@ -6,7 +6,7 @@
         <nav-header></nav-header>
       </el-header>
       <el-container>
-        <el-aside width="200px">
+        <el-aside width="200px" :class="{col: isCollapse}">
           <nav-left :active="active"></nav-left>
         </el-aside>
         <el-main>
@@ -55,7 +55,11 @@
 
     },
     filters: {},
-    computed: {},
+    computed: {
+      isCollapse () {
+        return this.$store.state.isCollapse
+      }
+    },
     watch: {
 
     },
@@ -64,6 +68,9 @@
 </script>
 
 <style scoped lang="scss">
+  .col {
+    width: 100px !important;
+  }
   .el-header {
     padding: 0;
   }
