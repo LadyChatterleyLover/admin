@@ -13,7 +13,18 @@ import LunarFullCalendar from 'vue-lunar-full-calendar'
 // i18n国际化
 import i18n from "./i18n/langs"
 import VCharts from 'v-charts'
-import 'echarts-wordcloud/dist/echarts-wordcloud'
+
+
+Vue.use(VCharts)
+Vue.use(LunarFullCalendar)
+Vue.use(ElementUI)
+Vue.prototype.$com = http
+Vue.prototype.$moment = moment
+Vue.prototype.$lodash = lodash
+Vue.config.productionTip = false
+
+
+
 
 axios.defaults.timeout = 10000
 // axios.interceptors.request.use(config => {
@@ -31,14 +42,6 @@ axios.interceptors.response.use(
     }, error => {
       return Promise.reject(error)
     })
-
-Vue.use(VCharts)
-Vue.use(LunarFullCalendar)
-Vue.use(ElementUI)
-Vue.prototype.$com = http
-Vue.prototype.$moment = moment
-Vue.prototype.$lodash = lodash
-Vue.config.productionTip = false
 
 new Vue({
   router,

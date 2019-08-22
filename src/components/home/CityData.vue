@@ -66,4 +66,5 @@
   .ve-wordcloud {
     top: -42px !important;
   }
+
 </style>

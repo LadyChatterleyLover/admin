@@ -1,35 +1,27 @@
 <template>
-  <div class="container menu__title">
+  <div class="container menu__title __main-menu">
     <el-menu
         :collapse="isCollapse"
         :default-active="active"
         class="el-menu-vertical-demo"
-        background-color="#004F9E"
-        text-color="#fff"
-        active-text-color="#ffd04b"
+        background-color="#ffffff"
+        text-color="#9EB2BD"
+        active-text-color="#0FA0F8"
         @select="selectMenu">
-      <div class="top" :class="{col: isCollapse}">
-        <div @click="collapse">
-          <i class="el-icon-s-fold icon" v-if="!isCollapse"></i>
-        </div>
-        <div @click="collapse">
-          <i class="el-icon-s-unfold icon" v-if="isCollapse"></i>
-        </div>
-      </div>
       <template v-for="(item, idx) in menu" class="menu">
         <div class="menu">
           <div class="new" v-if="item.update && !isCollapse">new</div>
           <div class="dian" v-if="item.update && isCollapse"></div>
-          <el-menu-item :key="idx" :index="item.index" v-if="!item.children" @click="goTo(item.path)">
-            <i :class="item.icon"></i>
-            <span slot="title">{{item.title}}</span>
-          </el-menu-item>
+            <el-menu-item :key="idx" :index="item.index" v-if="!item.children" @click="goTo(item.path)">
+              <i :class="item.icon"></i>
+              <span slot="title">{{item.title}}</span>
+            </el-menu-item>
           <el-submenu v-if="item.children" :index="item.index">
             <template slot="title">
               <i :class="item.icon"></i>
               <span v-if="!isCollapse">{{item.title}}</span>
             </template>
-            <el-menu-item-group v-for="(item1,index) in item.children" :key="index" >
+            <el-menu-item-group v-for="(item1,index) in item.children" :key="index">
               <el-menu-item :index="item1.index" @click="goTo(item1.path)">
                 {{item1.title}}
               </el-menu-item>
@@ -48,7 +40,6 @@
     props: {},
     data() {
       return {
-        isCollapse: false,
         active: '1',
         menu: [
           {
@@ -109,7 +100,7 @@
     },
     methods: {
       selectMenu(index, path) {
-        this.menu.map(item =>{
+        this.menu.map(item => {
           if (Number(index) === Number(item.index) && item.update || Number(path[0]) === Number(item.index) && item.update) {
             this.$store.state.dialogMsg = item.text
             this.$store.state.showDialogMsg = true
@@ -118,10 +109,6 @@
       },
       goTo(path) {
         this.$router.push(path)
-      },
-      collapse() {
-        this.isCollapse = !this.isCollapse
-        this.$store.state.isCollapse = this.isCollapse
       },
       getUpdate() {
         this.$com.req('api/update').then(res => {
@@ -175,6 +162,11 @@
       if (path === '/form/stepForm') {
         this.active = '5-1'
       }
+    },
+    computed: {
+      isCollapse() {
+        return this.$store.state.isCollapse
+      }
     }
   }
 </script>
@@ -197,35 +189,14 @@
     z-index: 99;
   }
 
-  .top {
-    position: absolute;
-    background: #004F9E;
-    display: flex;
-    top: 20px;
-    left: 150px;
-    z-index: 999999;
-  }
-
   .el-menu {
     position: fixed;
     height: 100vh;
     left: 0;
     top: 40px;
-    padding-top: 30px;
+    padding-top: 18px;
   }
 
-  .col {
-    left: 20px !important;
-  }
-
-  @keyframes col {
-    from {
-      left: 150px;
-    }
-    to {
-      left: 20px;
-    }
-  }
 
   .left {
     background: #004F9E;
@@ -242,9 +213,11 @@
   .el-submenu .el-menu-item {
     min-width: 180px !important;
   }
+
   .menu {
     position: relative;
   }
+
   .new {
     color: red;
     position: absolute;
@@ -253,6 +226,7 @@
     z-index: 99;
     width: 30px;
   }
+
   .dian {
     background: red;
     border-radius: 50%;

@@ -3,8 +3,10 @@
     <div class="progress">
       <home-progress></home-progress>
     </div>
-    <div>
-      <city-data></city-data>
+    <div class="content">
+      <div>
+        <city-data></city-data>
+      </div>
     </div>
   </div>
 
@@ -45,6 +47,16 @@
   .container {
     .progress {
       margin: 10px 0 50px 0;
+    }
+    .content {
+      /*display: flex;*/
+      /*align-items: center;*/
+      /*div {*/
+      /*  margin-left: 30px;*/
+      /*  &:first-child {*/
+      /*    margin-left: 0;*/
+      /*  }*/
+      /*}*/
     }
   }
 </style>

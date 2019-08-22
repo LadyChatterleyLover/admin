@@ -27,7 +27,7 @@
         </div>
       </div>
       <div class="h-desc">
-        如果有更多的渠道请自行添加, 所有添加的渠道会显示在CRM系统Leads的"线索来源"中
+        如果有更多的渠道请自行添加, 所有添加的渠道会显示在CRM系统中
       </div>
     </div>
     <div class="content">
@@ -35,17 +35,18 @@
         <div class="c-title">
           薪资结构
         </div>
-        <el-table style="width: 100%" ref="table" :data="tableData"  @cell-click="cellClick">
+        <el-table style="width: 100%" ref="table" :data="tableData" @cell-click="cellClick">
           <el-table-column
-            label="薪资构成"
-            align="center"
+              label="薪资构成"
+              align="center"
           >
             <template slot-scope="scope">
               <div v-if="!scope.row.isNameEdit">
                 {{scope.row.name}}
               </div>
               <div v-else>
-                <el-input  v-model="scope.row.name" ref="refName" size="small" @blur="nameBlur(scope.row)" @keyup.enter.native="keyName"></el-input>
+                <el-input v-model="scope.row.name" ref="refName" size="small" @blur="nameBlur(scope.row)"
+                          @keyup.enter.native="keyName"></el-input>
               </div>
             </template>
           </el-table-column>
@@ -58,7 +59,8 @@
                 {{scope.row.planMoney}}
               </div>
               <div v-else>
-                <el-input  v-model="scope.row.planMoney" ref="refPlan" size="small" @blur="planBlur(scope.row)" @keyup.enter.native="keyPlan"></el-input>
+                <el-input v-model="scope.row.planMoney" ref="refPlan" size="small" @blur="planBlur(scope.row)"
+                          @keyup.enter.native="keyPlan"></el-input>
               </div>
             </template>
           </el-table-column>
@@ -71,7 +73,8 @@
                 {{scope.row.actualMoney}}
               </div>
               <div v-else>
-                <el-input  v-model="scope.row.actualMoney" ref="refActual" size="small" @blur="actualBlur(scope.row)" @keyup.enter.native="keyActual"></el-input>
+                <el-input v-model="scope.row.actualMoney" ref="refActual" size="small" @blur="actualBlur(scope.row)"
+                          @keyup.enter.native="keyActual"></el-input>
               </div>
             </template>
           </el-table-column>
@@ -101,6 +104,7 @@
         </el-table>
         <div class="btn">
           <el-button type="primary" @click="add">添加更多</el-button>
+          <el-button type="primary" @click="cal" v-if="flag">取消</el-button>
         </div>
         <div class="all">
           <div class="all-item">总计</div>
@@ -124,11 +128,12 @@
     props: {},
     data() {
       return {
+        flag: false, // 显示取消按钮
         title: '',
         icon: '',
         month: '',
-        tableData: [],
-        selectMonth: '',
+        tableData: [], // 表格数据
+        selectMonth: '', // 选择的月份
         pickerOptions: {
           shortcuts: [{
             text: '本月',
@@ -151,7 +156,7 @@
       }
     },
     methods: {
-      getData () {
+      getData() {
         this.$com.req('api/pay').then(res => {
           if (res.code === 200) {
             this.tableData = res.data
@@ -169,7 +174,9 @@
           }
         })
       },
-      add () {
+      // 添加更多
+      add() {
+        this.flag = true
         this.tableData.push({
           isPlanEdit: true,
           isActualEdit: true,
@@ -181,7 +188,11 @@
           thisMonth: 0
         })
       },
-      cellClick (row, column, cell, event) {
+      cal() {
+        this.flag = false
+        this.tableData.pop()
+      },
+      cellClick(row, column, cell, event) {
         if (column.label === '计划支出(元)') {
           row.isPlanEdit = true
         }
@@ -189,11 +200,11 @@
           row.isActualEdit = true
         }
       },
-      nameBlur (item) {
+      nameBlur(item) {
         item.isNameEdit = false
         this.$message.success('操作成功')
       },
-      planBlur (item) {
+      planBlur(item) {
         item.planMoney = Number(item.planMoney)
         item.isPlanEdit = false
         this.planMoney = 0
@@ -202,7 +213,7 @@
         })
         this.$message.success('修改成功')
       },
-      actualBlur (item) {
+      actualBlur(item) {
         item.actualMoney = Number(item.actualMoney)
         item.isActualEdit = false
         this.actualMoney = 0
@@ -211,16 +222,16 @@
         })
         this.$message.success('修改成功')
       },
-      keyPlan () {
+      keyPlan() {
         this.$refs.refPlan.blur()
       },
-      keyActual () {
+      keyActual() {
         this.$refs.refActual.blur()
       },
-      keyName () {
+      keyName() {
         this.$refs.refName.blur()
       },
-      changeMonth (val) {
+      changeMonth(val) {
         this.month = this.$moment(val).format('YYYY年MM月')
       }
     },
@@ -246,6 +257,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       .top {
         display: flex;
         align-items: center;
@@ -267,13 +279,16 @@
         }
       }
     }
+
     .header {
       margin-top: 24px;
       background: #fff;
+
       .h-con {
         display: flex;
         align-items: center;
         justify-content: space-between;
+
         .h-title {
           font-size: 24px;
           font-weight: 700;
@@ -281,11 +296,13 @@
           height: 80px;
           line-height: 80px;
         }
+
         .h-time {
           position: relative;
           right: 30px;
         }
       }
+
       .h-desc {
         width: 100%;
         background: #E5F2E1;
@@ -295,21 +312,25 @@
         font-size: 14px;
       }
     }
+
     .content {
       .c-title {
         font-size: 24px;
         font-weight: 700;
       }
+
       .btn {
         position: relative;
         left: 3.5%;
         margin-top: 20px;
       }
+
       .all {
         margin-top: 20px;
         display: flex;
         align-items: center;
         color: #0285DC;
+
         .all-item {
           text-align: center;
           flex: 1;
@@ -317,6 +338,7 @@
       }
     }
   }
+
   .el-table {
     border: 1px solid #eee;
     margin-top: 40px;

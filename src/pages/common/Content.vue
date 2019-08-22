@@ -11,7 +11,15 @@
         </el-aside>
         <el-main>
           <dialog-msg></dialog-msg>
-          <nav-view></nav-view>
+          <div class="top" :class="{isCol: isCollapse}">
+            <div @click="collapse">
+              <i class="el-icon-s-fold icon" v-if="!isCollapse"></i>
+            </div>
+            <div @click="collapse">
+              <i class="el-icon-s-unfold icon" v-if="isCollapse"></i>
+            </div>
+          </div>
+          <nav-view class="nav"></nav-view>
           <router-view></router-view>
         </el-main>
       </el-container>
@@ -47,7 +55,11 @@
         active: '1'
       }
     },
-    methods: {},
+    methods: {
+      collapse() {
+        this.$store.state.isCollapse = !this.$store.state.isCollapse
+      },
+    },
     mounted() {
 
     },
@@ -93,5 +105,29 @@
   }
   .el-main {
     width: calc(100vw - 16px);
+  }
+  .top {
+    position: absolute;
+    background: #9EB2BD;
+    display: flex;
+    top: 13%;
+    left: 13.3%;
+    z-index: 99;
+    font-size: 22px;
+  }
+  .isCol {
+    animation: isCol .2s linear forwards;
+  }
+  .icon {
+    font-size: 24px;
+    color: #fff;
+  }
+  @keyframes isCol {
+    from {
+      left: 13.3%;
+    }
+    to {
+      left: 6%
+    }
   }
 </style>

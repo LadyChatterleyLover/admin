@@ -8,7 +8,7 @@ import treeData from './tree'
  Mock.mock('api/getMailList', 'get', {
   code: 200,
   msg: 'success',
-  'data|666': [
+  'data|100': [
     {
       id: '@increment(1)',
       name: '@cword(2, 4)',
@@ -149,3 +149,15 @@ Mock.mock('api/progress', 'get', {
   ]
 })
 
+// 获取地图数据
+Mock.mock('api/getMapData', 'get', {
+  code: 200,
+  msg: 'success',
+  'data|10': [
+    {
+      id: '@increment(1)',
+      value: '@integer(0,100000)',
+      province: '@province'
+    }
+  ]
+})
