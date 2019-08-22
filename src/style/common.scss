@@ -76,4 +76,7 @@
   .el-submenu {
     &:hover {}
   }
+  .is-active .el-tooltip {
+    left: -6px !important;
+  }
 }
