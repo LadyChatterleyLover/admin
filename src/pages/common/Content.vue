@@ -104,7 +104,7 @@
     }
   }
   .el-main {
-    padding:0 0 0 40px;
+    padding-left: 40px;
   }
   .top {
     position: relative;
