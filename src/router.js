@@ -80,7 +80,15 @@ const router = new Router({
           component: () => import('./pages/stepForm/StepForm.vue'),
           meta: {
             title: '分步表单'
-          }
+          },
+        },
+        {
+          path: 'checkForm',
+          name: 'checkForm',
+          component: () => import('./pages/stepForm/Check.vue'),
+          meta: {
+            title: '查看账单'
+          },
         }
       ],
     },

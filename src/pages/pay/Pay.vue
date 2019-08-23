@@ -304,7 +304,6 @@
       }
 
       .h-desc {
-        width: 100%;
         background: #E5F2E1;
         height: 50px;
         line-height: 50px;

@@ -24,7 +24,10 @@
     props: {},
     data() {
       return {
-
+        handleAvatarSuccess(res, file) {
+          console.log(res)
+          console.log(file)
+        }
       }
     },
     methods: {

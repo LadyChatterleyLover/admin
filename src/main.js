@@ -10,6 +10,7 @@ import http from './http'
 import moment from 'dayjs'
 import lodash from 'lodash'
 import LunarFullCalendar from 'vue-lunar-full-calendar'
+import Print from 'vue-print-nb'
 // i18n国际化
 import i18n from "./i18n/langs"
 import VCharts from 'v-charts'
@@ -18,6 +19,7 @@ import VCharts from 'v-charts'
 Vue.use(VCharts)
 Vue.use(LunarFullCalendar)
 Vue.use(ElementUI)
+Vue.use(Print)
 Vue.prototype.$com = http
 Vue.prototype.$moment = moment
 Vue.prototype.$lodash = lodash

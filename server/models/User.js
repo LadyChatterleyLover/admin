@@ -14,6 +14,9 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  avatar: {
+    type: String
+  }
 })
 
 module.exports = User = mongoose.model('User', UserSchema)

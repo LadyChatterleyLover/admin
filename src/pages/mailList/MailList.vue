@@ -4,7 +4,7 @@
       <el-tree :data="treeData" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
     </div>
     <div style="flex: 5">
-      <div class="container" v-if="searchList.length > 0">
+      <div class="container" v-if="searchList.length > 0" >
         <div  class="content" v-for="(item, index) in searchList" :key="index">
           <el-card class="card">
             <div slot="header" class="top">

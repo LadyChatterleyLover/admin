@@ -90,8 +90,8 @@
           if (res.code === 200) {
             this.loading = false
             localStorage.setItem('adminToken', res.token)
-            localStorage.setItem('adminUser', JSON.stringify(res.data[0]))
-            this.$store.state.user = res.data[0]
+            localStorage.setItem('adminUser', JSON.stringify(res.data))
+            this.$store.state.user = res.data
             this.$message({
               type: 'success',
               message: '登录成功'

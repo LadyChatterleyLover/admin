@@ -1,12 +1,10 @@
 const router = require('koa-router')()
-const md5 = require('md5')
 const svgCaptcha = require('svg-captcha')
 const User = require('../models/User')
 const jwt = require('jsonwebtoken')
 const secret = 'lpwq 1225'
 const nodemailer = require('nodemailer')
 const rp = require('request-promise')
-const passport = require('l-passport')
 const {msgKey, emailPass, clientId, clientSecret, appId, appSecret} = require('../config')
 
 router.prefix('/users')
@@ -39,7 +37,6 @@ router.post('/register', async ctx => {
     password,
       sms
   } = ctx.request.body
-  password = md5(password)
   let newUser = new User({
     username,
     password
@@ -77,12 +74,7 @@ router.post('/register', async ctx => {
 
 // 登录
 router.post('/login', async ctx => {
-  let {
-    username,
-    password,
-    code
-  } = ctx.request.body
-  password = md5(password)
+  let {username, password, code} = ctx.request.body
   let user = await User.find({
     username,
     password
@@ -98,7 +90,7 @@ router.post('/login', async ctx => {
       ctx.session.user = user[0]
       ctx.body = {
         code: 200,
-        data: user,
+        data: ctx.session.user,
         token,
         msg: '登录成功'
       }
@@ -135,26 +127,40 @@ router.post('/delete', async ctx => {
   }
 })
 
-// 修改用户
-router.post('/update', async ctx => {
-  let {
-    username,
-    password
-  } = ctx.request.body
-  let id = ctx.request.body.id
-  let res = await User.findByIdAndUpdate(id, {
+// 修改密码
+router.post('/updatePwd', async ctx => {
+  let { username, password, id, newPwd} = ctx.request.body
+  let user = await User.findOne({
     username,
     password
   })
-  if (res) {
-    ctx.body = {
-      code: 200,
-      msg: '编辑成功'
+  if (user) {
+    if (password === newPwd) {
+      ctx.body = {
+        code: 500,
+        msg: '新密码不能与原密码相同'
+      }
+    } else {
+      let res = await User.findByIdAndUpdate(id, {
+        username,
+        password: newPwd
+      })
+      if (res) {
+        ctx.body = {
+          code: 200,
+          msg: '修改成功'
+        }
+      } else {
+        ctx.body = {
+          code: 500,
+          msg: '修改失败'
+        }
+      }
     }
   } else {
     ctx.body = {
       code: 500,
-      msg: '编辑失败'
+      msg: '原密码不正确,请重新输入'
     }
   }
 })
@@ -256,21 +262,13 @@ router.post('/sendMsg', async ctx => {
   }
 })
 
-passport.initialize([
-  {
-    provider: 'wechat',
-    clients: [
-      { platform: 'web', appId: appId, appSecret: appSecret },
-      { platform: 'ios', appId: appId, appSecret: appSecret },
-      { platform: 'android', appId: appId, appSecret: appSecret },
-    ]
+router.get('/logout', async ctx => {
+  ctx.session.user = null
+  ctx.body = {
+    code: 200,
+    msg: '退出成功'
   }
-])
-
-router.get('/login/wechat_web', passport.authorization('wechat', { platform: 'web' }), async (ctx) => {
-  console.log(ctx)
-  ctx.body = ctx.state.passport;
-
 })
+
 
 module.exports = router

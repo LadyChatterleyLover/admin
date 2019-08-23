@@ -194,7 +194,6 @@
     height: 100vh;
     left: 0;
     top: 40px;
-    padding-top: 18px;
   }
 
 

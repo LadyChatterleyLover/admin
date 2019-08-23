@@ -21,6 +21,7 @@
     "vue-count-to": "^1.0.13",
     "vue-i18n": "^8.14.0",
     "vue-lunar-full-calendar": "^1.2.2",
+    "vue-print-nb": "^1.4.0",
     "vue-router": "^3.0.3",
     "vue-style-loader": "^4.1.2",
     "vue-virtual-scroll-list": "^1.4.2",

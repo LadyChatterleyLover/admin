@@ -85,7 +85,7 @@
             <el-divider></el-divider>
             <div class="pwd">
               <el-form :model="form2" :rules="rules" label-width="100px" ref="sendForm">
-                <el-form-item label="付款账户:" prop="password">
+                <el-form-item label="支付密码:" prop="password">
                   <el-input type="password" v-model="form2.password" style="width: 300px"></el-input>
                 </el-form-item>
                 <el-form-item>
@@ -122,7 +122,7 @@
                 <el-button type="primary" @click="aglin">再转一笔</el-button>
               </div>
               <div>
-                <el-button>查看账单</el-button>
+                <el-button @click="check">查看账单</el-button>
               </div>
             </div>
           </div>
@@ -213,6 +213,13 @@
         this.form.password = ''
         this.form.name = ''
         this.form.money = ''
+      },
+      check () {
+        sessionStorage.setItem('formInfo',JSON.stringify(this.form))
+        window.open('/form/checkForm')
+      },
+      print () {
+
       }
     },
     mounted() {

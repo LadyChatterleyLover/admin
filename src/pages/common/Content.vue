@@ -1,6 +1,6 @@
 <template>
   <div style="overflow-x: hidden">
-    <router-view v-if="$route.path === '/login' || $route.path === '/register' || $route.path === '/findPwd'"></router-view>
+    <router-view v-if="$route.path === '/login' || $route.path === '/register' || $route.path === '/findPwd' || $route.path==='/form/checkForm'"></router-view>
     <el-container v-else>
       <el-header style="padding: 0;z-index: 999">
         <nav-header></nav-header>
@@ -104,30 +104,21 @@
     }
   }
   .el-main {
-    width: calc(100vw - 16px);
+    padding:0 0 0 40px;
   }
   .top {
-    position: absolute;
+    position: relative;
     background: #9EB2BD;
     display: flex;
-    top: 9%;
-    left: 13.3%;
+    top: 18px;
+    left: -30px;
     z-index: 99;
     font-size: 22px;
-  }
-  .isCol {
-    animation: isCol .2s linear forwards;
+    width: 22px;
   }
   .icon {
     font-size: 24px;
     color: #fff;
   }
-  @keyframes isCol {
-    from {
-      left: 13.3%;
-    }
-    to {
-      left: 6%
-    }
-  }
+
 </style>

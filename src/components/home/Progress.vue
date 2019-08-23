@@ -52,6 +52,7 @@
         <div class="p-desc" v-if="active === index">
           {{item.desc}}
         </div>
+        <div class="line" v-if="index < 2"></div>
       </div>
     </div>
   </div>
@@ -158,7 +159,15 @@
         justify-content: center;
         align-items: center;
         font-size: 12px;
-
+        .line {
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 1px;
+          height: 24px;
+          background: #ccc;
+        }
         .con {
           position: absolute;
           height: 120px;

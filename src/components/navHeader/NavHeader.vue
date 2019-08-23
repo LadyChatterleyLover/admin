@@ -2,28 +2,58 @@
   <div class="headerNav">
     <div class="top">
       <div class="title">小爱后台管理系统</div>
-      <!--      <div class="content">-->
-      <!--        <div class="date" v-if="date >= 6 && date <=11">早上好,</div>-->
-      <!--        <div class="date" v-if="date > 11 && date <=13">中午好,</div>-->
-      <!--        <div class="date" v-if="date > 13 && date <=18">下午好,</div>-->
-      <!--        <div class="date" v-if="date> 18 && date <=23">晚上好,</div>-->
-      <!--        <div class="date" v-if="date > 23 || date <6">已经很晚了,该休息了喔,</div>-->
-      <!--        <div class="user">亲爱的 {{user.username}}</div>-->
-      <!--        <div class="loginTime">上次登录时间:-->
-      <!--          {{year}}年{{month}}月{{day}}日{{hours}}时{{min}}分{{seconds}}秒</div>-->
-      <!--      </div>-->
       <div>
         <el-dropdown @command="handleCommand">
-          <span class="el-dropdown-link">
-                    中英文切换
-             <i class="el-icon-arrow-down el-icon--right"></i>
-          </span>
+          <div class="com">
+            <div class="img" v-if="!user.avatar"><el-avatar :size="30" :src="circleUrl"></el-avatar></div>
+            <div class="img" v-else><el-avatar :size="30" :src="user.avatar"></el-avatar></div>
+            <div class="name">
+              亲爱的{{user.username}}
+            </div>
+            <div class="icon">
+              <i class="el-icon-caret-bottom"></i>
+            </div>
+          </div>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="zh">中文</el-dropdown-item>
-            <el-dropdown-item command="en">英文</el-dropdown-item>
+            <el-dropdown-item command="upload">
+              <el-upload
+                  class="avatar-uploader"
+                  action="api/upload"
+                  :show-file-list="false"
+                  :on-success="handleAvatarSuccess"
+                  :before-upload="beforeAvatarUpload">
+                <div>上传头像</div>
+              </el-upload>
+            </el-dropdown-item>
+            <el-dropdown-item command="updatePwd">修改密码</el-dropdown-item>
+            <el-dropdown-item command="logout">退出系统</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
+      <el-dialog
+          title="提示"
+          :visible.sync="dialogVisible"
+          :modal-append-to-body="false"
+          width="30%"
+      >
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="110px" class="demo-ruleForm">
+          <el-form-item label="请输入原密码" prop="password">
+            <el-input v-model="ruleForm.password" type="password"></el-input>
+          </el-form-item>
+          <el-form-item label="请输入新密码" prop="newPwd">
+            <el-input v-model="ruleForm.newPwd" type="password"></el-input>
+          </el-form-item>
+          <el-form-item label="请确认新密码" prop="rePwd">
+            <el-input v-model="ruleForm.rePwd" type="password"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <div class="btn">
+              <el-button type="primary" @click="submitForm('ruleForm')">确认修改</el-button>
+              <el-button @click="cal">取消</el-button>
+            </div>
+          </el-form-item>
+        </el-form>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -34,34 +64,108 @@
     data() {
       return {
         user: {},
-        year: '',
-        month: '',
-        day: '',
-        hours: '',
-        min: '',
-        seconds: '',
-        date: ''
+        circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+        dialogVisible: false,
+        ruleForm: {
+          password: '',
+          newPwd: '',
+          rePwd: ''
+        },
+        rules: {
+          password: [
+            { required: true, message: '请输入原密码', trigger: 'blur' },
+            { min: 6,  message: '密码至少6位', trigger: 'blur' }
+          ],
+          newPwd: [
+            { required: true, message: '请输入新密码', trigger: 'blur' },
+            { min: 6,  message: '密码至少6位', trigger: 'blur' }
+          ],
+          rePwd: [
+            { required: true, message: '请确认密码', trigger: 'blur' },
+            { min: 6,  message: '密码至少6位', trigger: 'blur' }
+          ],
+        }
       }
     },
     methods: {
       // 根据下拉框的中被选中的值切换语言
       handleCommand(command) {
-        this.$i18n.locale = command
-        console.log(this.$i18n.locale)
+        if (command === 'upload') {
+
+        }
+        if (command === 'updatePwd') {
+          this.dialogVisible = true
+        }
+        if (command === 'logout') {
+          this.$com.req('api/users/logout').then(res => {
+            if (res.code === 200) {
+              this.$message.success(res.msg)
+              localStorage.removeItem('adminUser')
+              localStorage.removeItem('adminToken')
+              this.$router.push('/login')
+            }
+          })
+        }
       },
+      handleAvatarSuccess (res) {
+        if (res) {
+          this.$set(this.user, 'avatar', res.url)
+          localStorage.setItem('adminUser', JSON.stringify(this.user))
+          this.$message.success('上传成功')
+        }
+      },
+      beforeAvatarUpload(file) {
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return  isLt2M
+      },
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            if (this.ruleForm.newPwd !== this.ruleForm.rePwd) {
+              this.$message.error('两次密码输入不一致,请重新输入')
+              return
+            }
+            this.$com.req('api/users/updatePwd', {
+              id: this.user._id,
+              username: this.user.username,
+              password: this.ruleForm.password,
+              newPwd: this.ruleForm.newPwd
+            }).then(res => {
+              console.log(res)
+              if (res.code === 200) {
+                this.$message.success(res.msg)
+                this.user.password = this.ruleForm.newPwd
+                localStorage.setItem('adminUser', JSON.stringify(this.user))
+                this.dialogVisible = false
+                this.ruleForm.password = ''
+                this.ruleForm.newPwd = ''
+                this.ruleForm.rePwd = ''
+              }
+              if (res.code === 500) {
+                this.$message.error(res.msg)
+                this.ruleForm.password = ''
+                this.ruleForm.newPwd = ''
+                this.ruleForm.rePwd = ''
+              }
+            })
+          } else {
+            this.$message.error('表单输入错误,请检查后重新输入')
+            return false;
+          }
+        });
+      },
+      cal () {
+        this.dialogVisible = false
+        this.$refs.ruleForm.resetFields()
+        this.ruleForm.password = ''
+        this.ruleForm.newPwd = ''
+        this.ruleForm.rePwd = ''
+      }
     },
     mounted() {
-      if (this.user) {
-        this.year = this.$moment(this.user.date).format('YYYY')
-        this.month = this.$moment(this.user.date).format('MM')
-        this.day = this.$moment(this.user.date).format('DD')
-        this.hours = parseInt(this.$moment(this.user.date).format('HH'))
-        this.min = this.$moment(this.user.date).format('mm')
-        this.seconds = this.$moment(this.user.date).format('ss')
-        this.seconds = this.seconds < 60 ? this.seconds : this.seconds - 60
-      }
-      let date = new Date().getTime()
-      this.date = parseInt(this.$moment(date).format('HH'))
       if (JSON.parse(localStorage.getItem('adminUser'))) {
         this.user = JSON.parse(localStorage.getItem('adminUser'))
       } else {
@@ -93,23 +197,27 @@
         font-size: 18px;
       }
 
-      .content {
+      .com {
         display: flex;
         align-items: center;
-        justify-content: center;
-        padding-right: 30px;
-        font-size: 16px;
+        position: relative;
+        right: 30px;
+        cursor: pointer;
+        .img {
+          width: 30px;
+          height: 30px;
+          margin-right: 6px;
+        }
 
-        div {
-          &:last-child {
-            padding: 0 10px;
-          }
-
-          &:first-child {
-            padding-right: 5px;
-          }
+        .name {
+          margin-right: 4px;
         }
       }
     }
+  }
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
   }
 </style>
