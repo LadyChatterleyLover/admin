@@ -1,20 +1,34 @@
-const en = {
-    commons: {
-      xiaoai: '小爱',
-      admin: '管理员',
-      personInfo: '个人信息',
-      editPwd: '修改密码',
-      quit: '退出',
-      hi: '您好',
-      index: '首页',
-      share: '分享功能',
-      infoManage: '信息管理',
-      offer: 'offer管理',
-      userInfo: '人员信息',
-      logout: '退出系统',
-      serving: '任职信息'
-  },
+const zh = {
+  commons: {
+    'xiaoai': 'xiaoai',
+    'admin': 'Admin',
+    'personInfo': 'PersonInfo',
+    'editPwd': 'Edit Password',
+    'uploadAvatar': 'Upload Avatar',
+    'dashboard': 'Dashboard',
+    'calendar': 'Calendar',
+    'payMent': 'PayMent',
+    'organize': 'Organize',
+    'quit': 'Sign Out',
+    'hi': 'Hi',
+    'index': 'Dashboard',
+    'mailList': 'MailList',
+    'infoManage': 'Infos',
+    'offer': 'Offer',
+    'userInfo': 'UserInfo',
+    'logout': 'Logout',
+    'serving': 'Serving',
+    'form': 'Form',
+    'stepForm': 'StepForm',
+    'checkForm': 'CheckForm',
+    'revenue': 'Revenue',
+    'repaid': 'Repaid',
+    'price': 'Price',
+    'rate': 'Rate',
+    'dollar': 'Dollar',
+    'profit': 'Profit',
+    'tenThousand': 'Ten Thousand'
+  }
 }
 
-
-export default en;
+export default zh

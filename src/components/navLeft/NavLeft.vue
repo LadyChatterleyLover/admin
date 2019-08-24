@@ -14,16 +14,16 @@
           <div class="dian" v-if="item.update && isCollapse"></div>
             <el-menu-item :key="idx" :index="item.index" v-if="!item.children" @click="goTo(item.path)">
               <i :class="item.icon"></i>
-              <span slot="title">{{item.title}}</span>
+              <span slot="title">{{$t(`commons.${item.enTitle}`)}}</span>
             </el-menu-item>
           <el-submenu v-if="item.children" :index="item.index">
             <template slot="title">
               <i :class="item.icon"></i>
-              <span v-if="!isCollapse">{{item.title}}</span>
+              <span v-if="!isCollapse">{{ $t(`commons.${item.enTitle}`)}}</span>
             </template>
             <el-menu-item-group v-for="(item1,index) in item.children" :key="index">
               <el-menu-item :index="item1.index" @click="goTo(item1.path)">
-                {{item1.title}}
+                {{ $t(`commons.${item1.enTitle}`)}}
               </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
@@ -45,38 +45,45 @@
           {
             index: '1',
             title: '首页',
+            enTitle: 'dashboard',
             icon: 'el-icon-location',
             path: '/'
           },
           {
             index: '2',
             title: '日程',
+            enTitle: 'calendar',
             icon: 'el-icon-date',
             path: '/calendar'
           },
           {
             index: '3',
             title: '通讯录',
+            enTitle: 'mailList',
             icon: 'el-icon-document',
             path: '/mailList'
           },
           {
             index: '4',
             title: '组织员工',
+            enTitle: 'organize',
             icon: 'el-icon-user',
             children: [
               {
                 title: 'offer管理',
+                enTitle: 'offer',
                 index: '4-1',
                 path: '/organization/offer'
               },
               {
                 title: '人员信息',
+                enTitle: 'userInfo',
                 index: '4-2',
                 path: '/organization/userInfo'
               },
               {
                 title: '薪酬管理',
+                enTitle: 'payMent',
                 index: '4-3',
                 path: '/organization/pay'
               }
@@ -86,10 +93,12 @@
           {
             index: '5',
             title: '表单页',
+            enTitle: 'form',
             icon: 'el-icon-files',
             children: [
               {
                 title: '分步表单',
+                enTitle: 'stepForm',
                 index: '5-1',
                 path: '/form/stepForm'
               }
@@ -205,7 +214,7 @@
   }
 
   .el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 180px;
+    width: 200px;
     min-height: 400px;
   }
 
@@ -220,8 +229,8 @@
   .new {
     color: red;
     position: absolute;
-    left: 110px;
-    top: 20px;
+    left: 130px;
+    top: 22px;
     z-index: 99;
     width: 30px;
   }

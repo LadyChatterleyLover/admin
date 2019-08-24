@@ -1,7 +1,7 @@
 <template>
   <el-breadcrumb separator=">" class="nav" style="padding-bottom: 30px;">
     <el-breadcrumb-item v-for="item in navs" :key="item.id" >
-      {{item.title}}
+      {{ $t(`commons.${item.title}`)}}
     </el-breadcrumb-item>
   </el-breadcrumb>
 </template>
@@ -19,14 +19,14 @@
       let matched = this.$route.matched
       if (this.$route.matched[0].meta.title !== '首页') {
         this.navs = [{
-          title: '首页'
+          title: 'dashboard'
         }]
       } else {
         this.navs = []
       }
       for (let i = 0; i < matched.length; i++) {
         if (matched[i].meta.title !== undefined) {
-          this.navs.push({'title': matched[i].meta.title})
+          this.navs.push({'title': matched[i].meta.enTitle})
         }
       }
     },
@@ -36,7 +36,7 @@
       '$route' (val, oldVal) {
         if (val.matched[0].meta.title !== '首页') {
           this.navs = [{
-            title: '首页'
+            title: 'dashboard'
           }]
         } else {
           this.navs = []
@@ -44,7 +44,7 @@
         let matched = val.matched
         for (let i = 0; i < matched.length; i++) {
           if (matched[i].meta.title !== undefined) {
-            this.navs.push({'title': matched[i].meta.title})
+            this.navs.push({'title': matched[i].meta.enTitle})
           }
         }
       }

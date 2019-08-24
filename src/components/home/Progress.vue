@@ -5,7 +5,7 @@
            @click="active=index">
         <div class="con">
           <div class="c-title">
-            {{item.title}}
+            {{ $t(`commons.${item.enTitle}`)}}({{ $t(`commons.dollar`)}})
           </div>
           <div class="money">
             <div v-if="active === index">
@@ -50,7 +50,7 @@
           {{item.value}}<span v-if="item.value > 0">%</span>
         </div>
         <div class="p-desc" v-if="active === index">
-          {{item.desc}}
+          {{ $t(`commons.${item.desc}`)}}
         </div>
         <div class="line" v-if="index < 2"></div>
       </div>
@@ -88,20 +88,23 @@
               if (index === 0) {
                 this.$set(item, 'barColor', '#5EB0FE')
                 this.$set(item, 'backgroundColor', '#A9D0FF')
-                this.$set(item, 'desc', '完成率')
+                this.$set(item, 'desc', 'rate')
                 this.$set(item, 'title', '本月营收(元)')
+                this.$set(item, 'enTitle', 'revenue')
               }
               if (index === 1) {
                 this.$set(item, 'barColor', '#80E313')
                 this.$set(item, 'backgroundColor', '#D3F4AF')
-                this.$set(item, 'desc', '完成率')
+                this.$set(item, 'desc', 'rate')
                 this.$set(item, 'title', '待回款(元)')
+                this.$set(item, 'enTitle', 'repaid')
               }
               if (index === 2) {
                 this.$set(item, 'barColor', '#F2AE57')
                 this.$set(item, 'backgroundColor', '#FFE8CC')
-                this.$set(item, 'desc', '月增幅')
+                this.$set(item, 'desc', 'rate')
                 this.$set(item, 'title', '客单价(元/合同)')
+                this.$set(item, 'enTitle', 'price')
               }
             })
             this.progress = res.data

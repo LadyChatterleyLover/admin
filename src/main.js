@@ -12,7 +12,7 @@ import lodash from 'lodash'
 import LunarFullCalendar from 'vue-lunar-full-calendar'
 import Print from 'vue-print-nb'
 // i18n国际化
-import i18n from "./i18n/langs"
+import i18n from "./i18n/i18n"
 import VCharts from 'v-charts'
 
 

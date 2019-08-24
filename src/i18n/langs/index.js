@@ -1,21 +1,10 @@
-import Vue from 'vue'
-import VueI18n from 'vue-i18n'
-Vue.use(VueI18n)
+import en from './en'
+import cn from './cn'
+import tw from './tw'
 
-import enLocale from './en'
-import zhLocale from './zh'
 
-Vue.use(VueI18n)
-const i18n = new VueI18n({
-  locale: localStorage.lang || 'zh',
-  messages: {
-    zh: {
-      ...zhLocale
-    },
-    en: {
-      ...enLocale
-    },
-  }
-})
-
-export default i18n
+export default {
+  en: en,
+  cn: cn,
+  tw: tw
+}

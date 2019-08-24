@@ -1,34 +1,52 @@
 <template>
   <div class="headerNav">
     <div class="top">
-      <div class="title">小爱后台管理系统</div>
-      <div>
-        <el-dropdown @command="handleCommand">
-          <div class="com">
-            <div class="img" v-if="!user.avatar"><el-avatar :size="30" :src="circleUrl"></el-avatar></div>
-            <div class="img" v-else><el-avatar :size="30" :src="user.avatar"></el-avatar></div>
-            <div class="name">
-              亲爱的{{user.username}}
+      <div class="title">{{$t('commons.xiaoai')}}{{$t('commons.admin')}}</div>
+      <div class="t-right">
+        <div class="select">
+          <el-dropdown @command="changeLang" placement="bottom">
+          <span class="el-dropdown-link">
+            <i class="el-icon-setting"></i>
+          </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="cn">简体中文</el-dropdown-item>
+              <el-dropdown-item command="tw">繁體中文</el-dropdown-item>
+              <el-dropdown-item command="en">English</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+        <div>
+          <el-dropdown @command="handleCommand">
+            <div class="com">
+              <div class="img" v-if="!user.avatar">
+                <el-avatar :size="30" :src="circleUrl"></el-avatar>
+              </div>
+              <div class="img" v-else>
+                <el-avatar :size="30" :src="user.avatar"></el-avatar>
+              </div>
+              <div class="name">
+                亲爱的{{user.username}}
+              </div>
+              <div class="icon">
+                <i class="el-icon-caret-bottom"></i>
+              </div>
             </div>
-            <div class="icon">
-              <i class="el-icon-caret-bottom"></i>
-            </div>
-          </div>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="upload">
-              <el-upload
-                  class="avatar-uploader"
-                  action="api/upload"
-                  :show-file-list="false"
-                  :on-success="handleAvatarSuccess"
-                  :before-upload="beforeAvatarUpload">
-                <div>上传头像</div>
-              </el-upload>
-            </el-dropdown-item>
-            <el-dropdown-item command="updatePwd">修改密码</el-dropdown-item>
-            <el-dropdown-item command="logout">退出系统</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="upload">
+                <el-upload
+                    class="avatar-uploader"
+                    action="api/upload"
+                    :show-file-list="false"
+                    :on-success="handleAvatarSuccess"
+                    :before-upload="beforeAvatarUpload">
+                  <div>{{$t('commons.uploadAvatar')}}</div>
+                </el-upload>
+              </el-dropdown-item>
+              <el-dropdown-item command="updatePwd">{{$t('commons.logout')}}</el-dropdown-item>
+              <el-dropdown-item command="logout">{{$t('commons.editPwd')}}</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
       </div>
       <el-dialog
           title="提示"
@@ -73,16 +91,16 @@
         },
         rules: {
           password: [
-            { required: true, message: '请输入原密码', trigger: 'blur' },
-            { min: 6,  message: '密码至少6位', trigger: 'blur' }
+            {required: true, message: '请输入原密码', trigger: 'blur'},
+            {min: 6, message: '密码至少6位', trigger: 'blur'}
           ],
           newPwd: [
-            { required: true, message: '请输入新密码', trigger: 'blur' },
-            { min: 6,  message: '密码至少6位', trigger: 'blur' }
+            {required: true, message: '请输入新密码', trigger: 'blur'},
+            {min: 6, message: '密码至少6位', trigger: 'blur'}
           ],
           rePwd: [
-            { required: true, message: '请确认密码', trigger: 'blur' },
-            { min: 6,  message: '密码至少6位', trigger: 'blur' }
+            {required: true, message: '请确认密码', trigger: 'blur'},
+            {min: 6, message: '密码至少6位', trigger: 'blur'}
           ],
         }
       }
@@ -107,7 +125,7 @@
           })
         }
       },
-      handleAvatarSuccess (res) {
+      handleAvatarSuccess(res) {
         if (res) {
           this.$set(this.user, 'avatar', res.url)
           localStorage.setItem('adminUser', JSON.stringify(this.user))
@@ -119,7 +137,7 @@
         if (!isLt2M) {
           this.$message.error('上传头像图片大小不能超过 2MB!');
         }
-        return  isLt2M
+        return isLt2M
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
@@ -157,19 +175,25 @@
           }
         });
       },
-      cal () {
+      cal() {
         this.dialogVisible = false
         this.$refs.ruleForm.resetFields()
         this.ruleForm.password = ''
         this.ruleForm.newPwd = ''
         this.ruleForm.rePwd = ''
-      }
-    },
-    mounted() {
-      if (JSON.parse(localStorage.getItem('adminUser'))) {
-        this.user = JSON.parse(localStorage.getItem('adminUser'))
-      } else {
-        this.user = {}
+      },
+      changeLang(e) {
+        console.log(e)
+        localStorage.setItem('lang', e);
+        this.$i18n.locale = e;
+      },
+      mounted() {
+        this.selectValue = localStorage.lang === undefined ? 'cn' : localStorage.lang
+        if (JSON.parse(localStorage.getItem('adminUser'))) {
+          this.user = JSON.parse(localStorage.getItem('adminUser'))
+        } else {
+          this.user = {}
+        }
       }
     }
   }
@@ -191,7 +215,23 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-
+      .t-right {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        .select {
+          position: absolute;
+          left: -70px;
+          top: 2px;
+          .el-dropdown-link {
+            display: flex;
+            align-items: center;
+            font-size: 22px;
+            cursor: pointer;
+          }
+        }
+      }
       .title {
         padding-left: 30px;
         font-size: 18px;
@@ -203,6 +243,7 @@
         position: relative;
         right: 30px;
         cursor: pointer;
+
         .img {
           width: 30px;
           height: 30px;
@@ -215,6 +256,7 @@
       }
     }
   }
+
   .btn {
     display: flex;
     align-items: center;

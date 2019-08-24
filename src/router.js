@@ -13,7 +13,8 @@ const router = new Router({
       path: '/',
       component: Content,
       meta: {
-        title: '首页'
+        title: '首页',
+        enTitle: 'dashboard',
       },
       children: [
         {
@@ -47,7 +48,8 @@ const router = new Router({
           name: 'calendar',
           component: () => import('./pages/calendar/Calendar.vue'),
           meta: {
-            title: '日程'
+            title: '日程',
+            enTitle: 'calendar'
           }
         }
       ],
@@ -62,7 +64,8 @@ const router = new Router({
           name: 'mailList',
           component: () => import('./pages/mailList/MailList.vue'),
           meta: {
-            title: '通讯录'
+            title: '通讯录',
+            enTitle: 'mailList'
           }
         }
       ],
@@ -71,7 +74,8 @@ const router = new Router({
       path: '/form',
       component: Content,
       meta: {
-        title: '表单页'
+        title: '表单页',
+        enTitle: 'form',
       },
       children: [
         {
@@ -79,7 +83,8 @@ const router = new Router({
           name: 'stepForm',
           component: () => import('./pages/stepForm/StepForm.vue'),
           meta: {
-            title: '分步表单'
+            title: '分步表单',
+            enTitle: 'stepForm'
           },
         },
         {
@@ -87,7 +92,8 @@ const router = new Router({
           name: 'checkForm',
           component: () => import('./pages/stepForm/Check.vue'),
           meta: {
-            title: '查看账单'
+            title: '查看账单',
+            enTitle: 'checkForm',
           },
         }
       ],
@@ -98,6 +104,7 @@ const router = new Router({
       component: Content,
       meta: {
         title: '组织员工',
+        enTitle: 'organize',
         icon: 'el-icon-folder-opened'
       },
       children: [
@@ -107,15 +114,18 @@ const router = new Router({
           component: () => import('./pages/offer/Offer.vue'),
           meta: {
             title: 'offer管理',
+            enTitle: 'offer',
             icon: 'el-icon-folder-opened'
           }
         },
         {
           path: 'userInfo',
           name: 'userInfo',
+          enTitle: 'userInfo',
           component: () => import('./pages/userInfo/UserInfo.vue'),
           meta: {
             title: '人员信息',
+            enTitle: 'userInfo',
             icon: 'el-icon-user'
           }
         },
@@ -125,6 +135,7 @@ const router = new Router({
           component: () => import('./pages/pay/Pay.vue'),
           meta: {
             title: '薪酬管理',
+            enTitle: 'payMent',
             icon: 'el-icon-price-tag'
           }
         }

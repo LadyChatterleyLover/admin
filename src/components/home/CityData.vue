@@ -3,7 +3,7 @@
     <div class="city">
       <el-card>
         <div slot="header">
-          <h2>分公司利润(万)</h2>
+          <h2>{{$t('commons.profit')}}({{$t('commons.tenThousand')}})</h2>
         </div>
         <ve-wordcloud :data="chartData" :settings="chartSettings"></ve-wordcloud>
       </el-card>

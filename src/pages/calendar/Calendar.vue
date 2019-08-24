@@ -118,7 +118,7 @@
         config: { // 日历配置
           defaultView: 'month',
           lunarCalendar: true, // 控制是否显示中国农历、显示的为true，隐藏为flase，默认为true(Control whether the Chinese calendar shows true, unrealistic flase, default true.)
-          locale: 'zh-zh', // 语言
+          locale: 'en-en', // 语言
           buttonText: { // 按钮
             today: '今天',
             month: '月',
