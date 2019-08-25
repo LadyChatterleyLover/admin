@@ -1,0 +1,61 @@
+.menu__title .el-menu-item-group__title {
+  padding: 0 !important; }
+
+.tree__content .el-tree-node__content {
+  height: 50px; }
+
+.full__event .fc-day-grid-event {
+  margin: 5px !important; }
+
+.el__card__body .el-card__body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0; }
+
+.__main-menu {
+  background-color: white;
+  font-size: 14px; }
+  .__main-menu .el-menu-item,
+  .__main-menu .el-submenu__title {
+    color: #9fb2bd;
+    border-left: none; }
+  .__main-menu .el-submenu .el-menu {
+    background-color: #f0f8fa; }
+  .__main-menu .el-submenu.is-active .el-submenu__title {
+    color: #159efa;
+    border-left: 6px solid #159efa;
+    padding-left: 14px !important; }
+  .__main-menu .menu li.el-menu-item.is-active {
+    padding-left: 14px !important; }
+  .__main-menu .menu li ul li ul li.el-menu-item.is-active {
+    padding-left: 40px !important; }
+  .__main-menu .el-menu-item.is-active {
+    color: #10a0f8;
+    border-left: 6px solid #159efa;
+    padding-left: 40px; }
+  .__main-menu .el-menu-item:hover {
+    background: #f1f2f3 !important; }
+  .__main-menu .el-submenu__title:hover {
+    background: #f1f2f3 !important; }
+  .__main-menu .el-submenu .el-menu-item.is-active {
+    border-left: none; }
+  .__main-menu .el-menu .el-menu-item.is-active {
+    color: #38434e; }
+  .__main-menu .el-menu-item {
+    border-bottom: 1px solid #e8f0f3; }
+  .__main-menu .el-submenu {
+    border-bottom: 1px solid #e8f0f3; }
+  .__main-menu .el-submenu .el-menu-item {
+    border-bottom: none; }
+  .__main-menu .is-active .el-tooltip {
+    left: -6px !important; }
+
+.home__tags .el-tag.el-tag--info {
+  background: #EBF5FF !important;
+  color: #409EFF !important; }
+.home__tags .el-select .el-tag__close.el-icon-close {
+  background: #fff; }
+
+/*# sourceMappingURL=common.css.map */

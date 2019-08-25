@@ -249,4 +249,7 @@
       background: #F2F3F7 !important;
     }
   }
+  ::-webkit-scrollbar {
+    width: 10px;   /* 滚动条宽度， width：对应竖滚动条的宽度  height：对应横滚动条的高度*/
+  }
 </style>
