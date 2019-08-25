@@ -80,3 +80,13 @@
     left: -6px !important;
   }
 }
+
+.home__tags {
+  .el-tag.el-tag--info {
+    background: #EBF5FF !important;
+    color: #409EFF !important;
+  }
+  .el-select .el-tag__close.el-icon-close {
+    background: #fff;
+  }
+}

@@ -6,7 +6,7 @@
         <div class="select">
           <el-dropdown @command="changeLang" placement="bottom">
           <span class="el-dropdown-link">
-            <i class="el-icon-setting"></i>
+            <img src="../../assets/lang.svg" alt="">
           </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="cn">简体中文</el-dropdown-item>
@@ -135,7 +135,7 @@
       beforeAvatarUpload(file) {
         const isLt2M = file.size / 1024 / 1024 < 2;
         if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
+          this.$message.error('上传头像图片大小不能超过 2MB!')
         }
         return isLt2M
       },
@@ -183,17 +183,15 @@
         this.ruleForm.rePwd = ''
       },
       changeLang(e) {
-        console.log(e)
-        localStorage.setItem('lang', e);
-        this.$i18n.locale = e;
+        localStorage.setItem('lang', e)
+        this.$i18n.locale = e
       },
-      mounted() {
-        this.selectValue = localStorage.lang === undefined ? 'cn' : localStorage.lang
-        if (JSON.parse(localStorage.getItem('adminUser'))) {
-          this.user = JSON.parse(localStorage.getItem('adminUser'))
-        } else {
-          this.user = {}
-        }
+    },
+    mounted() {
+      if (localStorage.adminUser) {
+        this.user = JSON.parse(localStorage.getItem('adminUser'))
+      } else {
+        this.user = {}
       }
     }
   }
@@ -223,12 +221,16 @@
         .select {
           position: absolute;
           left: -70px;
-          top: 2px;
+          cursor: pointer;
           .el-dropdown-link {
             display: flex;
             align-items: center;
-            font-size: 22px;
-            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            img {
+              width: 100%;
+              height: 100%;
+            }
           }
         }
       }

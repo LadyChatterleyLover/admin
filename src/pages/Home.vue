@@ -7,6 +7,9 @@
       <div>
         <city-data></city-data>
       </div>
+      <div>
+        <dynamic></dynamic>
+      </div>
     </div>
   </div>
 
@@ -15,19 +18,18 @@
 <script>
   import cityData from '../components/home/CityData'
   import homeProgress from '../components/home/Progress'
+  import dynamic from '../components/home/Dynamic'
   export default {
     name: "Home",
     components: {
       cityData,
-      homeProgress
+      homeProgress,
+      dynamic
     },
     props: {},
     data() {
       return {
-        handleAvatarSuccess(res, file) {
-          console.log(res)
-          console.log(file)
-        }
+
       }
     },
     methods: {
@@ -52,14 +54,14 @@
       margin: 10px 0 50px 0;
     }
     .content {
-      /*display: flex;*/
-      /*align-items: center;*/
-      /*div {*/
-      /*  margin-left: 30px;*/
-      /*  &:first-child {*/
-      /*    margin-left: 0;*/
-      /*  }*/
-      /*}*/
+      display: flex;
+      align-items: center;
+      div {
+        flex: 1;
+        &:first-child {
+          margin-right: 10px;
+        }
+      }
     }
   }
 </style>

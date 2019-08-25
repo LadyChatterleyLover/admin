@@ -149,3 +149,14 @@ Mock.mock('api/progress', 'get', {
   ]
 })
 
+// 首页汇报人
+Mock.mock('api/report', 'get', {
+  code: 200,
+  msg: 'success',
+  'data|20': [
+    {
+      id: '@increment(1)',
+      name: '@cword(2,4)'
+    }
+  ]
+})

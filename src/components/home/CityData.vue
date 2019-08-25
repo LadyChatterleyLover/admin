@@ -59,7 +59,6 @@
   .container {
     .city {
       overflow-y: hidden;
-      width: 400px;
       height: 400px;
     }
   }
