@@ -25,7 +25,8 @@ const en = {
     'rate': '完成率',
     'dollar': '元',
     'profit': '利润',
-    'tenThousand': '万'
+    'tenThousand': '万',
+    'dear': '亲爱的'
   }
 }
 

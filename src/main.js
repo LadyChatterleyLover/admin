@@ -14,8 +14,10 @@ import Print from 'vue-print-nb'
 // i18n国际化
 import i18n from "./i18n/i18n"
 import VCharts from 'v-charts'
+import VueClipboard from 'vue-clipboard2'
 
 
+Vue.use(VueClipboard)
 Vue.use(VCharts)
 Vue.use(LunarFullCalendar)
 Vue.use(ElementUI)

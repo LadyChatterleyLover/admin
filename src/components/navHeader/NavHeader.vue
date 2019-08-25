@@ -25,7 +25,7 @@
                 <el-avatar :size="30" :src="user.avatar"></el-avatar>
               </div>
               <div class="name">
-                亲爱的{{user.username}}
+                {{$t('commons.dear')}}{{user.username}}
               </div>
               <div class="icon">
                 <i class="el-icon-caret-bottom"></i>

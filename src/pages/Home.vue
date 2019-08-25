@@ -11,6 +11,9 @@
         <dynamic></dynamic>
       </div>
     </div>
+    <div class="table">
+      <question></question>
+    </div>
   </div>
 
 </template>
@@ -19,12 +22,14 @@
   import cityData from '../components/home/CityData'
   import homeProgress from '../components/home/Progress'
   import dynamic from '../components/home/Dynamic'
+  import question from '../components/home/Question'
   export default {
     name: "Home",
     components: {
       cityData,
       homeProgress,
-      dynamic
+      dynamic,
+      question
     },
     props: {},
     data() {
@@ -62,6 +67,9 @@
           margin-right: 10px;
         }
       }
+    }
+    .table {
+      margin-top: 30px;
     }
   }
 </style>

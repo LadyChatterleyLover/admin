@@ -27,7 +27,8 @@ const zh = {
     'rate': 'Rate',
     'dollar': 'Dollar',
     'profit': 'Profit',
-    'tenThousand': 'Ten Thousand'
+    'tenThousand': 'Ten Thousand',
+    'dear': 'Dear'
   }
 }
 

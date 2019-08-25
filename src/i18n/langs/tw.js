@@ -25,7 +25,8 @@ const zhTW = {
     'dollar': '元',
     'rate': '完成率',
     'profit': '利潤',
-    'tenThousand': '萬'
+    'tenThousand': '萬',
+    'dear': '親愛的'
   }
 }
 
