@@ -166,7 +166,7 @@ Mock.mock('api/report', 'get', {
 Mock.mock('api/question', 'get', {
   code: 200,
   msg: 'success',
-  'data|20': [
+  'data|30': [
     {
       id: '@increment(1)',
       startTime: '@date',

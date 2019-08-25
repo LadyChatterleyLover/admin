@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-card>
-      <div style="margin-bottom:20px">
+      <div slot="header">
         <h1>网站问卷调查</h1>
       </div>
       <el-table
@@ -72,7 +72,8 @@
                        size="small"
                        v-clipboard:copy="url"
                        v-clipboard:success="onCopy"
-                       v-clipboard:error="onError">复制</el-button>
+                       v-clipboard:error="onError">复制
+            </el-button>
           </div>
         </div>
         <div class="desc">
@@ -93,6 +94,7 @@
 
 <script>
   import QRCode from 'qrcodejs2'
+
   export default {
     name: "Question",
     components: {},
@@ -116,7 +118,7 @@
       check(row) {
         this.dialogVisible = true
         this.url = row.url
-        this.$nextTick (()=>{
+        this.$nextTick(() => {
           this.qrcode()
         })
       },
@@ -127,19 +129,19 @@
           text: this.url// 设置二维码内容或跳转地址
         })
       },
-      onCopy () {
+      onCopy() {
         this.$message({
           type: 'success',
           message: '复制成功'
         })
       },
-      onError () {
+      onError() {
         this.$message({
           type: 'error',
           message: '复制失败'
         })
       },
-      sure () {
+      sure() {
         this.dialogVisible = false
         this.$refs.qrcode.innerHTML = ''
       }
@@ -178,6 +180,7 @@
     line-height: 1.5;
     border-radius: 8px;
   }
+
   .code {
     height: 200px;
     width: 100%;
@@ -185,6 +188,7 @@
     margin-top: 20px;
     align-items: center;
     justify-content: center;
+
     #code {
       width: 200px;
       height: 200px;
