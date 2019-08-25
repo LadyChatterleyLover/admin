@@ -30,13 +30,24 @@
                   </div>
                   <div class="c-report">
                     <div v-if="item.reportUsers.length > 0">
-                      汇报人:
+                      <div class="re-item">
+                        汇报人:&nbsp;
+                      </div>
                     </div>
-                    <div v-if="item.reportUsers.length > 0">
-              <span v-for="(item1, index1) in item.reportUsers" :key="index1">
-                {{item1}}
-              </span>
-                    </div>
+                    <el-tooltip placement="top-start" effect="light">
+                      <div slot="content">
+                        <div v-if="item.reportUsers.length > 0" class="r-name">
+                        <span v-for="(item1, index1) in item.reportUsers" :key="index1" >
+                          {{item1}}
+                        </span>
+                        </div>
+                      </div>
+                      <div v-if="item.reportUsers.length > 0" class="r-name" ref="reportUsers">
+                        <span v-for="(item1, index1) in item.reportUsers" :key="index1">
+                          {{item1}}
+                        </span>
+                      </div>
+                    </el-tooltip>
                   </div>
                   <div class="t-name">
                     <div class="text">
@@ -57,7 +68,7 @@
     <el-dialog
         title="添加动态"
         :visible.sync="dialogVisible"
-        >
+    >
       <div class="item home__tags">
         <el-form :model="ruleForm" ref="ruleForm" label-width="110px" class="demo-ruleForm">
           <el-form-item label="动态类型">
@@ -69,7 +80,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="相关汇报人" v-if="ruleForm.selectValue === '工作汇报'">
-            <el-select v-model="ruleForm.users" multiple  placeholder="请选择汇报人">
+            <el-select v-model="ruleForm.users" multiple placeholder="请选择汇报人">
               <el-option
                   v-for="item in reportUsers"
                   :key="item.id"
@@ -90,9 +101,9 @@
         </el-form>
       </div>
       <div slot="footer" class="dialog-footer">
-      <el-button @click="cal">取 消</el-button>
-      <el-button type="primary" @click="sureAdd">确 定</el-button>
-  </div>
+        <el-button @click="cal">取 消</el-button>
+        <el-button type="primary" @click="sureAdd">确 定</el-button>
+      </div>
     </el-dialog>
   </div>
 
@@ -102,6 +113,8 @@
   export default {
     name: "Dynamic",
     components: {},
+    directives: {},
+    filters: {},
     props: {},
     data() {
       return {
@@ -116,52 +129,39 @@
         },
         reportUsers: [],
         reports: [],
-        filterReports: []
+        filterReports: [],
+        flag: false, // 动态超出宽度显示
       }
     },
-    methods: {
-      changeDate () {
-        this.value = this.$moment(this.value).format('YYYY-MM-DD')
+    computed: {},
+    watch: {},
+    created() {
+
+    },
+    mounted() {
+      if (localStorage.adminUser) this.username = JSON.parse(localStorage.adminUser).username
+      this.value = this.$moment(new Date()).format('YYYY-MM-DD')
+      this.$nextTick(() => {
+        this.getReportUser()
         this.getReport()
-      },
-      add () {
+      })
+    },
+    methods: {
+      add() {
         this.dialogVisible = true
       },
-      sureAdd () {
-        this.$com.req('api/addDynamic', {
-          username: this.username,
-          date: this.value,
-          dynamic: this.ruleForm.text,
-          classification: this.ruleForm.selectValue,
-          reportUsers: this.ruleForm.users
-        }).then(res => {
-          if (res.code === 200) {
-            this.$message.success(res.msg)
-            this.ruleForm.text= ''
-            this.ruleForm.selectValue = ''
-            this.ruleForm.users = []
-            this.dialogVisible = false
-            this.getReport()
-          }
-        }).catch(err => {
-          console.log(err)
-        })
-      },
-      cal () {
+      cal() {
         this.dialogVisible = false
         this.value = this.$moment(this.value).format('YYYY-MM-DD')
-        this.ruleForm.text= ''
+        this.ruleForm.text = ''
         this.ruleForm.selectValue = ''
         this.ruleForm.users = []
       },
-      getReportUser () {
-        this.$com.req('api/report').then(res => {
-          if (res.code === 200) {
-            this.reportUsers = res.data
-          }
-        })
+      changeDate() {
+        this.value = this.$moment(this.value).format('YYYY-MM-DD')
+        this.getReport()
       },
-      getReport () {
+      getReport() {
         this.$com.req('api/getDynamic').then(res => {
           if (res.code === 200) {
             res.data.map(item => {
@@ -172,21 +172,35 @@
             this.reports = res.data
           }
         })
+      },
+      getReportUser() {
+        this.$com.req('api/report').then(res => {
+          if (res.code === 200) {
+            this.reportUsers = res.data
+          }
+        })
+      },
+      sureAdd() {
+        this.$com.req('api/addDynamic', {
+          username: this.username,
+          date: this.value,
+          dynamic: this.ruleForm.text,
+          classification: this.ruleForm.selectValue,
+          reportUsers: this.ruleForm.users
+        }).then(res => {
+          if (res.code === 200) {
+            this.$message.success(res.msg)
+            this.ruleForm.text = ''
+            this.ruleForm.selectValue = ''
+            this.ruleForm.users = []
+            this.dialogVisible = false
+            this.getReport()
+          }
+        }).catch(err => {
+          console.log(err)
+        })
       }
-    },
-    mounted() {
-      if (localStorage.adminUser) this.username = JSON.parse(localStorage.adminUser).username
-      this.value = this.$moment(new Date()).format('YYYY-MM-DD')
-      this.getReportUser()
-      this.getReport()
-    },
-    created() {
-
-    },
-    filters: {},
-    computed: {},
-    watch: {},
-    directives: {}
+    }
   }
 </script>
 
@@ -195,19 +209,23 @@
     .content {
       height: 400px;
       overflow-y: auto;
+
       .desc {
         height: 16px;
         display: flex;
         align-items: center;
         justify-content: space-between;
       }
+
       .c-desc {
         background: #FAFAFA;
-        margin: 5px 0;
+        margin: 15px 0;
         padding: 20px;
+
         &:hover {
           background: #F2F3F7;
         }
+
         .c-item {
           .name {
             width: 100%;
@@ -216,40 +234,59 @@
             justify-content: space-between;
           }
         }
+
         .t-name {
           display: flex;
           align-items: center;
           justify-content: space-between;
           margin-top: 20px;
+
           div {
             display: flex;
             align-items: center;
           }
+
           .time {
             color: #ccc;
           }
         }
+
         .c-report {
           margin-top: 20px;
           display: flex;
           align-items: center;
+
+          .re-item {
+          }
+
+          .r-name {
+            overflow: hidden;
+            width: 400px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
         }
       }
     }
   }
+
   .noThing {
     margin-top: 30px;
   }
+
   .el-select {
     width: 100%;
   }
+
   .back {
     background: #eee !important;
+
     &:hover {
       background: #F2F3F7 !important;
     }
   }
+
   ::-webkit-scrollbar {
-    width: 10px;   /* 滚动条宽度， width：对应竖滚动条的宽度  height：对应横滚动条的高度*/
+    width: 10px; /* 滚动条宽度， width：对应竖滚动条的宽度  height：对应横滚动条的高度*/
   }
 </style>
