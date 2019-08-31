@@ -50,15 +50,7 @@
     filters: {},
     computed: {},
     watch: {},
-    directives: {},
-    beforeRouteEnter (to, from,next) {
-      if (from.name === null && localStorage.adminUser) {
-        next(vm => {
-          vm.$message.success('登录成功')
-        })
-      }
-      next()
-    }
+    directives: {}
   }
 </script>
 
