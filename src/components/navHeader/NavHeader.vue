@@ -42,8 +42,8 @@
                   <div>{{$t('commons.uploadAvatar')}}</div>
                 </el-upload>
               </el-dropdown-item>
-              <el-dropdown-item command="updatePwd">{{$t('commons.logout')}}</el-dropdown-item>
-              <el-dropdown-item command="logout">{{$t('commons.editPwd')}}</el-dropdown-item>
+              <el-dropdown-item command="updatePwd">{{$t('commons.editPwd')}}</el-dropdown-item>
+              <el-dropdown-item command="logout">{{$t('commons.logout')}}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -190,6 +190,12 @@
     mounted() {
       if (localStorage.adminUser) {
         this.user = JSON.parse(localStorage.getItem('adminUser'))
+        if (this.user.login !== '') {
+          this.user.username = this.user.login
+        }
+        if (this.user.avatar_url !== '') {
+          this.user.avatar = this.user.avatar_url
+        }
       } else {
         this.user = {}
       }
