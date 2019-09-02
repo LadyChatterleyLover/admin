@@ -2,7 +2,7 @@ import Mock from 'mockjs'
 
 let arr = ['成都分公司', '北京分公司', '上海分公司', '哈尔滨公司', '微易', '郑州公司','测试部门', '财务部', '地州区', '盒马项目组', '成都区', '贵州区', '电商部', '综合管理部', '全民营销项目组', '单团部', '新销售业务部', '欧洲组', '中东非组', '票务组', '外联部', '西南总经理办公室', '市场营销部', '单团计调部', '票务部', '南亚计调部', '欧洲散拼计调部', '签证部', '东南亚事业部', '产品组', '途牛组', '携程组', '其他电商组', '资料组', '运营支持组', '京津组', '河北组', '太原公司', '内蒙古组']
 import treeData from './tree'
-let url = ['http://www.baidu.com', 'https://juejin.im/', 'https://www.douban.com/', 'https://github.com/']
+let url = ['https://www.baidu.com', 'https://juejin.im/', 'https://www.douban.com/', 'https://github.com/']
 
 
 // 获取通讯录
@@ -129,7 +129,7 @@ Mock.mock('api/pay', 'get', {
 Mock.mock('api/getCityData', 'get', {
   code: 200,
   msg: 'success',
-  'data|30': [
+  'data|40': [
     {
       city: '@city',
       value: '@integer(0,100)'

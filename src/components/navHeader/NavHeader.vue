@@ -42,8 +42,8 @@
                   <div>{{$t('commons.uploadAvatar')}}</div>
                 </el-upload>
               </el-dropdown-item>
-              <el-dropdown-item command="updatePwd">{{$t('commons.logout')}}</el-dropdown-item>
-              <el-dropdown-item command="logout">{{$t('commons.editPwd')}}</el-dropdown-item>
+              <el-dropdown-item command="updatePwd">{{$t('commons.editPwd')}}</el-dropdown-item>
+              <el-dropdown-item command="logout">{{$t('commons.logout')}}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>

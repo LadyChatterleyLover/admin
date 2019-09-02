@@ -29,7 +29,7 @@
             </div>
             <div class="picker">
               <div>
-                <el-time-select placeholder="选择时间"
+                <el-time-select placeholder="开始时间"
                                 style="width:217px"
                                 :editable="false"
                                 v-model="startTime" :picker-options="{
@@ -41,7 +41,7 @@
               </div>
               <div class="range">~</div>
               <div>
-                <el-time-select placeholder="选择时间" style="width:217px"
+                <el-time-select placeholder="结束时间" style="width:217px"
                                 v-model="endTime"
                                 :editable="false"
                                 :picker-options="{
