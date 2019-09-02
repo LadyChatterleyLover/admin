@@ -37,6 +37,12 @@
             </div>
           </el-form-item>
         </el-form>
+        <div class="git">
+          <div class="g-title">github登录</div>
+          <a href="api/users/githubLogin" @click="git">
+            <img src="../../assets/github.svg" alt="">
+          </a>
+        </div>
       </el-card>
     </div>
   </div>
@@ -70,6 +76,15 @@
       }
     },
     methods: {
+      git () {
+        this.$com.req('api/users/githubUser').then(res => {
+          if (res.code === 200) {
+            localStorage.setItem('adminUser', JSON.stringify(res.data))
+          } else {
+            this.$message.success('登录失败')
+          }
+        })
+      },
       getCaptcha() {
         this.$com.req('api/users/captcha').then(res => {
           this.captcha = res
@@ -125,8 +140,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    .form {
-
+    .git {
+      width: 100%;
+      margin-top: 20px;
+      text-align: center;
+      .g-title {
+        margin-bottom: 10px;
+        font-size: 20px;
+      }
     }
 
     .flex {

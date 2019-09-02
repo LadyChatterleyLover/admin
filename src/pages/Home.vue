@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+
     <div class="progress">
       <home-progress></home-progress>
     </div>

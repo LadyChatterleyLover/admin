@@ -190,6 +190,12 @@
     mounted() {
       if (localStorage.adminUser) {
         this.user = JSON.parse(localStorage.getItem('adminUser'))
+        if (this.user.login !== '') {
+          this.user.username = this.user.login
+        }
+        if (this.user.avatar_url !== '') {
+          this.user.avatar = this.user.avatar_url
+        }
       } else {
         this.user = {}
       }

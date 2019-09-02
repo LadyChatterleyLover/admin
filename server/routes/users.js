@@ -5,7 +5,8 @@ const jwt = require('jsonwebtoken')
 const secret = 'lpwq 1225'
 const nodemailer = require('nodemailer')
 const rp = require('request-promise')
-const {msgKey, emailPass, clientId, clientSecret, appId, appSecret} = require('../config')
+const fetch = require('node-fetch')
+const {msgKey, emailPass, clientId, clientSecret, appId, appSecret, scope} = require('../config')
 
 router.prefix('/users')
 
@@ -35,7 +36,7 @@ router.post('/register', async ctx => {
   let {
     username,
     password,
-      sms
+    sms
   } = ctx.request.body
   let newUser = new User({
     username,
@@ -129,7 +130,7 @@ router.post('/delete', async ctx => {
 
 // 修改密码
 router.post('/updatePwd', async ctx => {
-  let { username, password, id, newPwd} = ctx.request.body
+  let {username, password, id, newPwd} = ctx.request.body
   let user = await User.findOne({
     username,
     password
@@ -258,10 +259,11 @@ router.post('/sendMsg', async ctx => {
       }
     }
   } catch (e) {
-    console.log(e);
+    console.log(e)
   }
 })
 
+// 退出登录
 router.get('/logout', async ctx => {
   ctx.session.user = null
   ctx.body = {
@@ -270,5 +272,66 @@ router.get('/logout', async ctx => {
   }
 })
 
+// github登录
+router
+    .get('/githubLogin', async (ctx) => {
+      let dataStr = (new Date()).valueOf()
+      //重定向到认证接口,并配置参数
+      let path = "https://github.com/login/oauth/authorize"
+      path += '?client_id=' + clientId
+      path += '&scope=' + scope
+      path += '&state=' + dataStr
+      //转发到授权服务器
+      ctx.redirect(path)
+    })
+    .get('/auth', async (ctx) => {
+      const code = ctx.query.code
+      let path = 'https://github.com/login/oauth/access_token'
+      const params = {
+        client_id: clientId,
+        client_secret: clientSecret,
+        code: code
+      }
+      await fetch(path, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params)
+      })
+          .then(res => {
+            return res.text()
+          })
+          .then(body => {
+            const args = body.split('&')
+            let arg = args[0].split('=')
+            const access_token = arg[1]
+            return access_token
+          })
+          .then(async (token) => {
+            const url = ' https://api.github.com/user?access_token=' + token
+            console.log(url)
+            await fetch(url)
+                .then(res => {
+                  return res.json()
+                })
+                .then(res => {
+                  ctx.session.githubUser = res
+                  ctx.redirect(`http://localhost:9527`)
+                })
+          }).catch(e => {
+            console.log(e)
+          })
+    })
+
+router.get('/githubUser', async ctx => {
+  if (ctx.session.githubUser) {
+    ctx.body = {
+      code: 200,
+      msg: 'success',
+      data: ctx.session.githubUser
+    }
+  }
+})
 
 module.exports = router
