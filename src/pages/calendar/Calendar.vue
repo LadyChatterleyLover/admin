@@ -257,7 +257,8 @@
       }
     },
     mounted() {
-      this.username = JSON.parse(localStorage.adminUser).username
+      let user = JSON.parse(localStorage.adminUser)
+      this.username = user.username || user.login
       this.meetingUser.push(this.username)
       this.startArr.push(this.username)
     },
