@@ -6,7 +6,7 @@ const secret = 'lpwq 1225'
 const nodemailer = require('nodemailer')
 const rp = require('request-promise')
 const fetch = require('node-fetch')
-const {msgKey, emailPass, clientId, clientSecret, appId, appSecret, scope} = require('../config')
+const {msgKey, emailPass, clientId, clientSecret, scope} = require('../config')
 
 router.prefix('/users')
 
@@ -310,7 +310,6 @@ router
           })
           .then(async (token) => {
             const url = ' https://api.github.com/user?access_token=' + token
-            console.log(url)
             await fetch(url)
                 .then(res => {
                   return res.json()
@@ -324,6 +323,7 @@ router
           })
     })
 
+// 获取github登录的用户
 router.get('/githubUser', async ctx => {
   if (ctx.session.githubUser) {
     ctx.body = {
