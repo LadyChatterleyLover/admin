@@ -41,10 +41,10 @@
                 邮箱 : {{item.email}}
               </div>
               <div class="item">
-                办公电话 : {{item.phone}}
+                手机号码 : {{item.phone}}
               </div>
               <div class="item">
-                手机号码 : {{item.tel}}
+                办公电话 : {{item.tel}}
               </div>
               <div class="item">
                 性别 : {{item.gender === 0 ? '男' : "女"}}

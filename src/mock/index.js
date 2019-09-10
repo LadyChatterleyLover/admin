@@ -12,7 +12,7 @@ let url = ['https://www.baidu.com', 'https://juejin.im/', 'https://www.douban.co
   'data|100': [
     {
       id: '@increment(1)',
-      name: '@cword(2, 4)',
+      name: '@cname()',
       img: '@dataImage(80x80,@name)',
       phone: /^1([38]\d|5[0-35-9]|7[3678])\d{8}$/,
       tel: /\d{3}-\d{8}|\d{4}-\d{7}/,
@@ -45,7 +45,7 @@ Mock.mock('api/getOffer', 'get', {
   msg: 'success',
   'data|100': [
     {
-      name: '@cword(2, 4)',
+      name: '@cname()',
       img: '@dataImage(80x80,@name)',
       phone: /^1([38]\d|5[0-35-9]|7[3678])\d{8}$/,
       tel: /\d{3}-\d{8}|\d{4}-\d{7}/,
@@ -80,7 +80,7 @@ Mock.mock('api/userInfo', 'get', {
   'data|100': [
     {
       id: '@increment(1)',
-      name: '@cword(2, 4)',
+      name: '@cname()',
       num: '@integer(1000,9999)',
       mechanism: '区域中心',
       // 部门
