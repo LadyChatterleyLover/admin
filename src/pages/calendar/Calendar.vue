@@ -230,6 +230,7 @@
             this.startTime = ''
             this.endTime = ''
             this.schedule = ''
+            this.meetingUser.length = 1
           }
         })
       },
