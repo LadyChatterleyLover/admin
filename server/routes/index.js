@@ -1,8 +1,10 @@
 const router = require('koa-router')()
+const mongoose = require('mongoose')
 const Calendar = require('../models/Calendar')
 const User = require('../models/User')
 const Dynamic = require('../models/Dynamic')
 const multer = require('koa-multer')
+const dayjs = require('dayjs')
 
 router.get('/', async (ctx, next) => {
   ctx.body = 'hell koa2'
@@ -43,6 +45,37 @@ router.post('/calendar', async ctx => {
     }
   }
 })
+
+router.post('/repeatDynamic', async ctx => {
+  let {currentDay} = ctx.request.body
+  let lastDay = dayjs(currentDay).subtract(7, 'days').format('YYYY-MM-DD')
+  let res = await Calendar.find({
+    createDay: lastDay
+  })
+  if (res.length > 0) {
+    for (let i = 0; i < res.length; i++) {
+      let item = res[i]
+      item.createDay = currentDay
+      let newItem = new Calendar(item)
+      let result = await newItem.save()
+      console.log(result)
+      if (result) {
+        ctx.body = {
+          code: 200,
+          msg: 'success',
+          data: res
+        }
+      } else {
+        ctx.body = {
+          code: 500,
+          msg: '暂无数据',
+          data: null
+        }
+      }
+    }
+  }
+})
+
 
 router.post('/delCalendar', async ctx => {
   let id = ctx.request.body.id
@@ -129,7 +162,6 @@ router.get('/getDynamic', async ctx => {
     }
   }
 })
-
 
 
 module.exports = router

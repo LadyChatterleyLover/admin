@@ -22,10 +22,10 @@
                 <el-avatar :size="30" :src="circleUrl"></el-avatar>
               </div>
               <div class="img" v-else>
-                <el-avatar :size="30" :src="user.avatar"></el-avatar>
+                <el-avatar :size="30" :src="user.avatar || user.avatar_url"></el-avatar>
               </div>
               <div class="name">
-                {{$t('commons.dear')}}{{user.username}}
+                {{$t('commons.dear')}}{{user.username || user.login}}
               </div>
               <div class="icon">
                 <i class="el-icon-caret-bottom"></i>
@@ -190,12 +190,6 @@
     mounted() {
       if (localStorage.adminUser) {
         this.user = JSON.parse(localStorage.getItem('adminUser'))
-        if (this.user.login !== '') {
-          this.user.username = this.user.login
-        }
-        if (this.user.avatar_url !== '') {
-          this.user.avatar = this.user.avatar_url
-        }
       } else {
         this.user = {}
       }

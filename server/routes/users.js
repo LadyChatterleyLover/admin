@@ -36,11 +36,15 @@ router.post('/register', async ctx => {
   let {
     username,
     password,
+    email,
+    phone,
     sms
   } = ctx.request.body
   let newUser = new User({
     username,
-    password
+    password,
+    email,
+    phone,
   })
   let user = await User.find({
     username
@@ -173,7 +177,8 @@ router.post('/findPwd', async ctx => {
     email
   } = ctx.request.body
   let user = await User.findOne({
-    username: username
+    username: username,
+    email: email
   })
   if (user) {
     let transporter = await nodemailer.createTransport({
@@ -189,7 +194,7 @@ router.post('/findPwd', async ctx => {
       from: '你的小可爱 285258675@qq.com', // 从哪个邮箱发送
       to: email,
       subject: '找回密码', // 标题
-      text: `您用户名为${user.username}的密码是${user.password}`
+      text: `您用户名为${user.username}的账号的密码是${user.password}`
       // cc: '抄送',
       // bcc: '私密发送'
     }
@@ -211,7 +216,7 @@ router.post('/findPwd', async ctx => {
   } else {
     ctx.body = {
       code: 500,
-      msg: '用户不存在'
+      msg: '用户名或邮箱错误'
     }
   }
 })
