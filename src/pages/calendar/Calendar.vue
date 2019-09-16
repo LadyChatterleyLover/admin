@@ -161,23 +161,6 @@
                     })
                   }
                 })
-                let obj = {}
-                let arr = res.data.reduce((cur, next) => {
-                  obj[next.createDay] ? "" : obj[next.createDay] = true && cur.push(next);
-                  return cur
-                }, [])
-                arr.map(item => {
-                  let date = _this.$moment(item.createDay).add(7, 'days').format('YYYY-MM-DD')
-                  if (JSON.stringify(res).indexOf(date) === -1 && new Date(date).getTime() > Date.now()) {
-                    events.push({
-                      title: '重复上周',
-                      title_short: '重复上周',
-                      start: date,
-                      end: date,
-                      extra: JSON.stringify(item),
-                    })
-                  }
-                })
               }
               callback(events)
             })
@@ -209,32 +192,6 @@
         this.id = JSON.parse(event.extra)._id
         this.show = true
         this.dialogVisible = true
-        if (event.title === '重复上周') {
-          let day = this.$moment(event.start).format('YYYY-MM-DD')
-          this.dialogVisible = false
-          this.$com.req('api/repeatDynamic', {
-            currentDay: day
-          }).then(res => {
-            if (res.code === 200) {
-
-              this.$refs.calendar.$emit('refetch-events')
-              // res.data.map(item => {
-              //   console.log(item)
-              //   this.$com.req('api/calendar', {
-              //     users: item.users,
-              //     startTime: item.startTime,
-              //     endTime: item.endTime,
-              //     schedule: item.schedule,
-              //     createDay: item.createDay,
-              //   }).then(res => {
-              //     if (res.code === 200) {
-              //       this.$refs.calendar.$emit('refetch-events')
-              //     }
-              //   })
-              // })
-            }
-          })
-        }
       },
       // 删除日程
       sureDel () {
@@ -266,8 +223,7 @@
           users: this.meetingUser,
           startTime: this.startTime,
           endTime: this.endTime,
-          schedule: this.schedule,
-          createDay: this.currentDay,
+          schedule: this.schedule
         }).then(res => {
           if (res.code === 200) {
             this.$refs.calendar.$emit('refetch-events')
@@ -298,11 +254,10 @@
         this.endTime = ''
         this.schedule = ''
         this.meetingUser = this.startArr
-      },
+      }
     },
     mounted() {
-      let user =JSON.parse(localStorage.adminUser)
-      this.username = user.username || user.login
+      this.username = JSON.parse(localStorage.adminUser).username
       this.meetingUser.push(this.username)
       this.startArr.push(this.username)
     },
@@ -311,6 +266,9 @@
     },
     filters: {},
     computed: {
+      // user() {
+      //   return this.$store.state.user
+      // }
     },
     watch: {},
     directives: {}

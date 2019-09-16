@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './mock'
-import ElementUI from 'element-ui';
+import ElementUI, {Message} from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import axios from 'axios'
 import http from './http'
@@ -17,6 +17,9 @@ import VCharts from 'v-charts'
 import VueClipboard from 'vue-clipboard2'
 
 
+
+
+
 Vue.use(VueClipboard)
 Vue.use(VCharts)
 Vue.use(LunarFullCalendar)
@@ -26,8 +29,6 @@ Vue.prototype.$com = http
 Vue.prototype.$moment = moment
 Vue.prototype.$lodash = lodash
 Vue.config.productionTip = false
-
-
 
 
 axios.defaults.timeout = 10000

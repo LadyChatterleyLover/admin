@@ -12,7 +12,7 @@
       <div class="btn">
         <el-button type="primary" size="small" v-if="flag" @click="changeFlag">批量转正申请</el-button>
         <el-button type="primary" size="small" v-if="!flag" @click="sure">确认</el-button>
-        <el-button type="primary" size="small" v-if="!flag" @click="flag = true">取消</el-button>
+        <el-button type="primary" size="small" v-if="!flag" @click="cal">取消</el-button>
         <el-button type="primary" size="small">导出</el-button>
       </div>
     </div>
@@ -159,6 +159,10 @@
             this.tableData = this.data
           }, 1000)
         }
+      },
+      cal () {
+        this.flag = true
+        this.tableData = this.data
       },
       clickTag(item, index) {
         this.activeIndex = index

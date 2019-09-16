@@ -10,7 +10,7 @@ router.get('/', async (ctx, next) => {
   ctx.body = 'hell koa2'
 })
 
-
+// 获取日程
 router.get('/calendar', async ctx => {
   let res = await Calendar.find()
   if (res.length > 0) {
@@ -28,6 +28,7 @@ router.get('/calendar', async ctx => {
   }
 })
 
+// 添加日程
 router.post('/calendar', async ctx => {
   let newSchedule = new Calendar(ctx.request.body)
   let res = await newSchedule.save()
@@ -53,6 +54,7 @@ router.post('/repeatDynamic', async ctx => {
     createDay: lastDay
   })
   if (res.length > 0) {
+    let obj = {}
     for (let i = 0; i < res.length; i++) {
       let item = res[i]
       item.createDay = currentDay
@@ -75,8 +77,7 @@ router.post('/repeatDynamic', async ctx => {
     }
   }
 })
-
-
+// 删除日程
 router.post('/delCalendar', async ctx => {
   let id = ctx.request.body.id
   let res = await Calendar.findByIdAndRemove(id)
@@ -146,6 +147,7 @@ router.post('/addDynamic', async ctx => {
   }
 })
 
+// 获取动态
 router.get('/getDynamic', async ctx => {
   let res = await Dynamic.find()
   if (res.length > 0) {

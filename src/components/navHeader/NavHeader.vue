@@ -18,11 +18,12 @@
         <div>
           <el-dropdown @command="handleCommand">
             <div class="com">
-              <div class="img" v-if="!user.avatar">
-                <el-avatar :size="30" :src="circleUrl"></el-avatar>
+              <div class="img" v-if="user.avatar || user.avatar_url">
+                <el-avatar :size="30" :src="user.avatar || user.avatar_url"></el-avatar>
               </div>
               <div class="img" v-else>
                 <el-avatar :size="30" :src="user.avatar || user.avatar_url"></el-avatar>
+                <el-avatar :size="30" :src="circleUrl"></el-avatar>
               </div>
               <div class="name">
                 {{$t('commons.dear')}}{{user.username || user.login}}

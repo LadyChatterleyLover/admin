@@ -38,7 +38,7 @@
 
 <script>
   import NavHeader from '../../components/navHeader/NavHeader'
-  import NavLeft from '../..//components/navLeft/NavLeft'
+  import NavLeft from '../../components/navLeft/NavLeft'
   import NavView from './Nav'
   import DialogMsg from '../../components/dialog/UpdateDialog'
   export default {

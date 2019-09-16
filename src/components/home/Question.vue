@@ -30,7 +30,7 @@
             align="center">
         </el-table-column>
         <el-table-column
-            label="问卷主题"
+            label="问卷状态"
             align="center">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.status === 0">已发布</el-tag>
@@ -60,6 +60,7 @@
     <el-dialog
         title="复制地址"
         width="40%"
+        :show-close="false"
         :visible.sync="dialogVisible"
     >
       <div>

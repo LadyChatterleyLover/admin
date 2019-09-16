@@ -19,7 +19,6 @@
         </div>
         <div v-show="active !== index">
           <circle-progress
-              :key="index"
               :id="item.id"
               :width="80"
               :radius="10"
@@ -33,7 +32,6 @@
         </div>
         <div v-show="active === index">
           <circle-progress
-              :key="index"
               :id="item.id"
               :width="80"
               :radius="10"

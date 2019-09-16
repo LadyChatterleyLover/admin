@@ -67,6 +67,7 @@
     </div>
     <el-dialog
         title="添加动态"
+        :show-close="false"
         :visible.sync="dialogVisible"
     >
       <div class="item home__tags">

@@ -6,10 +6,6 @@ const CalendarSchema = new Schema({
     type: Array,
     required: true
   },
-  createDay: {
-    type: String,
-    required: true
-  },
   startTime: {
     type: Date,
     required: true

@@ -3,7 +3,5 @@ module.exports = {
   clientSecret: '8db90fa85a8d55ca4d0d78b14e79e05746c2a116', // github的cclientSecret
   msgKey: 'c32cc2c0ea084c9db36d9243041078f1', // 短信发送的key
   emailPass: 'dlceqqgjayanbiif', // 发送邮件的pass
-  appId: 'wxa422a42817d79ce9', // 微信appd
-  appSecret: '8111932b092d2d982166890d5d741116', // 微信appSecret
   scope: ['user']
 }
