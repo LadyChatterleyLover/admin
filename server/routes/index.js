@@ -51,16 +51,20 @@ router.post('/repeatDynamic', async ctx => {
   let {currentDay} = ctx.request.body
   let lastDay = dayjs(currentDay).subtract(7, 'days').format('YYYY-MM-DD')
   let res = await Calendar.find({
-    createDay: lastDay
+    currentDay: lastDay
   })
+  console.log(lastDay)
   if (res.length > 0) {
     let obj = {}
     for (let i = 0; i < res.length; i++) {
       let item = res[i]
-      item.createDay = currentDay
-      let newItem = new Calendar(item)
+      obj.currentDay = currentDay
+      obj.startTime = item.startTime
+      obj.endTime = item.endTime
+      obj.schedule = item.schedule
+      obj.users = item.users
+      let newItem = new Calendar(obj)
       let result = await newItem.save()
-      console.log(result)
       if (result) {
         ctx.body = {
           code: 200,

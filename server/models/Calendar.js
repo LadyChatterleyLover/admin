@@ -10,6 +10,10 @@ const CalendarSchema = new Schema({
     type: Date,
     required: true
   },
+  currentDay: {
+    type: String,
+    required: true
+  },
   endTime: {
     type: Date,
     required: true

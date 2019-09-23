@@ -90,7 +90,7 @@
         center
         :visible.sync="dialogVisible"
         width="20%"
-        >
+    >
       <div style="display: flex;justify-content: center;font-size: 16px">确定删除该日程安排吗?</div>
       <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
@@ -150,14 +150,32 @@
                 res.data.map(item => {
                   if (item.users !== undefined) {
                     events.push({
-                      start: item.startTime,
-                      end: item.endTime,
+                      start: item.currentDay,
+                      end: item.currentDay,
+                      currentDay: item.currentDay,
                       title: _this.$moment(item.startTime).format('HH:mm') + ' - ' + _this.$moment(item.endTime).format('HH:mm') + nbsp + item.schedule + br + '参与人: ' + nbsp + item.users.join(' ') + nbsp + br + '参与人数: ' + nbsp + icon + item.users.length,
                       extra: JSON.stringify(item),
                       backgroundColor: '#aaefca',
                       borderColor: '#d3f1cc',
                       textColor: '#333333',
                       fontWeight: '700'
+                    })
+                  }
+                })
+                let obj = {}
+                let arr = res.data.reduce((cur, next) => {
+                  obj[next.currentDay] ? "" : obj[next.currentDay] = true && cur.push(next);
+                  return cur
+                }, [])
+                arr.map(item1 => {
+                  let date = _this.$moment(item1.currentDay).add(7, 'days').format('YYYY-MM-DD')
+                  if (JSON.stringify(res).indexOf(date) === -1 && new Date(date).getTime() > Date.now()) {
+                    events.push({
+                      title: '重复上周',
+                      title_short: '重复上周',
+                      start: _this.$moment(item1.currentDay).add(7, 'days').format('YYYY-MM-DD'),
+                      end: _this.$moment(item1.currentDay).add(7, 'days').format('YYYY-MM-DD'),
+                      extra: JSON.stringify(item1),
                     })
                   }
                 })
@@ -192,9 +210,20 @@
         this.id = JSON.parse(event.extra)._id
         this.show = true
         this.dialogVisible = true
+        let day = this.$moment(event.start).format('YYYY-MM-DD')
+        if (event.title === '重复上周') {
+          this.dialogVisible = false
+          this.$com.req('api/repeatDynamic', {
+            currentDay:day
+          }).then(res => {
+            if (res.code === 200) {
+              this.$refs.calendar.$emit('refetch-events')
+            }
+          })
+        }
       },
       // 删除日程
-      sureDel () {
+      sureDel() {
         this.dialogVisible = false
         this.$com.req('api/delCalendar', {
           id: this.id
@@ -220,6 +249,7 @@
         this.endTime = this.currentDay + ' ' + this.endTime
         this.showDialog = false
         this.$com.req('api/calendar', {
+          currentDay: this.currentDay,
           users: this.meetingUser,
           startTime: this.startTime,
           endTime: this.endTime,
@@ -247,13 +277,16 @@
         this.meetingUser.push(this.user)
         this.user = ''
       },
-      calAdd () {
+      calAdd() {
         this.showDialog = false
         this.user = ''
         this.startTime = ''
         this.endTime = ''
         this.schedule = ''
         this.meetingUser = this.startArr
+      },
+      repeat() {
+
       }
     },
     mounted() {

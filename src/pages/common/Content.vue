@@ -1,7 +1,6 @@
 <template>
   <div style="overflow-x: hidden">
-    <router-view v-if="$route.path === '/login' || $route.path === '/register' || $route.path === '/findPwd' || $route.path==='/form/checkForm'"></router-view>
-    <el-container v-else>
+    <el-container>
       <el-header style="padding: 0;z-index: 999">
         <nav-header></nav-header>
       </el-header>
